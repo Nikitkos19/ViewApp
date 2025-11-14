@@ -40,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         objectList = new ArrayList<>();
-        objectList.add(new ObjectItem(R.drawable.image1, "ВК Музыка", "Музыкальный плеер", "Кайфуйте"));
-        objectList.add(new ObjectItem(R.drawable.image2, "ВК Видео", "Видео плеер", "Сдохните"));
-        // Добавляй другие объекты при необходимости
+
+        objectList.add(new ObjectItem(R.drawable.image1, "ВК Музыка", "ВК Музыка", "Кайфуйте"));
+        objectList.add(new ObjectItem(R.drawable.image2, "ВК Видео", "ВК Видео", "Сдохните"));
+        // Add more objects as needed
 
         ObjectAdapter adapter = new ObjectAdapter(this, objectList);
         recyclerView.setAdapter(adapter);
