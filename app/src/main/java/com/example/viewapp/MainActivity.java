@@ -1,26 +1,35 @@
 package com.example.viewapp;
 
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private List<ObjectItem> objectList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Initialize your object list
+        objectList = new ArrayList<>();
+        objectList.add(new ObjectItem(R.drawable.image1, "ВК Музыка", "Музыкальный плеер", "Кайфуйте"));
+        objectList.add(new ObjectItem(R.drawable.image2, "ВК Видео", "Видео плеер", "Сдохните"));
+        // Add more objects as needed
+
+        ObjectAdapter adapter = new ObjectAdapter(this, objectList);
+        recyclerView.setAdapter(adapter);
     }
 }
-
-
