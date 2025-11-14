@@ -5,8 +5,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,12 +28,13 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView nameTextView, shortTextView;
+        Button buttonDownload;
 
         public ViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
             nameTextView = shortTextView = itemView.findViewById(R.id.shortTextView);
-
+            buttonDownload = itemView.findViewById(R.id.buttonDownload);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -72,6 +76,11 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder
         holder.imageView.setImageResource(item.imageResId);
         holder.nameTextView.setText(item.name);
         holder.shortTextView.setText(item.shortText);
+        holder.buttonDownload.setOnClickListener(v -> {
+            // Тут запуск скачивания APK по URL
+            // Например, вызвать метод downloadApk(url);
+            Toast.makeText(context, "Загрузка приложения...", Toast.LENGTH_SHORT).show();
+        });
     }
 
     @Override
