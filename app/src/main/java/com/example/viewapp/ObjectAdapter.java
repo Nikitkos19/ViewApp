@@ -32,7 +32,7 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder
         public ViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
-            nameTextView = shortTextView = itemView.findViewById(R.id.shortTextView);
+            nameTextView = itemView.findViewById(R.id.nameTextView);
             downloadButton = itemView.findViewById(R.id.buttonDownload); // ищем кнопку
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +70,6 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder
         ObjectItem item = objectList.get(position);
         holder.imageView.setImageResource(item.imageResId);
         holder.nameTextView.setText(item.name);
-        holder.shortTextView.setText(item.shortText);
 
         // Устанавливаем обработчик для кнопки
         holder.downloadButton.setOnClickListener(new View.OnClickListener() {

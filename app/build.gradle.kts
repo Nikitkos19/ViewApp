@@ -44,4 +44,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.14.0")
+// основная библиотека
+    implementation("com.fasterxml.jackson.core:jackson-core:2.14.0")
+// ядро
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.14.0")
+// аннотации
+    implementation("com.google.code.gson:gson:2.8.9")
 }
