@@ -15,28 +15,47 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder> {
 
     private List<ObjectItem> objectList;
     private Context context;
+    private final List<ObjectItem> allItems;
+    private final List<ObjectItem> displayItems;
+    public void filterByCategory(String category) {
+        displayItems.clear();
+        if (category == null || category.equals("Все") || category.isEmpty()) {
+            displayItems.addAll(allItems);
+        } else {
+            for (ObjectItem item : allItems) {
+                if (category.equals(item.category)) {
+                    displayItems.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
 
     public ObjectAdapter(Context context, List<ObjectItem> objectList) {
         this.context = context;
         this.objectList = objectList;
+        this.allItems = new ArrayList<>(objectList);
+        this.displayItems = new ArrayList<>(objectList);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView nameTextView, shortTextView;
-        Button downloadButton; // добавляем кнопку
+        TextView nameTextView, categoryView;
+        Button downloadButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.imageView);
             nameTextView = itemView.findViewById(R.id.nameTextView);
-            downloadButton = itemView.findViewById(R.id.buttonDownload); // ищем кнопку
+            categoryView = itemView.findViewById(R.id.categoryView);
+            downloadButton = itemView.findViewById(R.id.buttonDownload);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -61,7 +80,7 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder
             extendedTextView.setText(item.extendedText);
 
             builder.setView(dialogView);
-            builder.setPositiveButton("Close", null);
+            builder.setPositiveButton("Закрыть", null);
 
             final AlertDialog dialog = builder.create();
             dialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -84,11 +103,10 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder
     }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ObjectItem item = objectList.get(position);
+        ObjectItem item = displayItems.get(position);
         holder.imageView.setImageResource(item.imageResId);
         holder.nameTextView.setText(item.name);
-
-        // Устанавливаем обработчик для кнопки
+        holder.categoryView.setText(item.category);
         holder.downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +116,6 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder
     }
     @Override
     public int getItemCount() {
-        return objectList.size();
+        return displayItems.size();
     }
 }

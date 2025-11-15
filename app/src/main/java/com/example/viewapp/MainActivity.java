@@ -1,9 +1,12 @@
 package com.example.viewapp;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -38,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
         isDarkMode = sharedPref.getBoolean("DARK_MODE", false);
 
         if (isDarkMode) {
-            setTheme(R.style.Base_Theme_ViewApp); // тёмная тема
+            setTheme(R.style.Base_Theme_ViewApp);
         } else {
-            setTheme(R.style.Theme_ViewApp); // светлая тема
+            setTheme(R.style.Theme_ViewApp);
         }
 
         super.onCreate(savedInstanceState);
@@ -54,22 +57,39 @@ public class MainActivity extends AppCompatActivity {
         for (ObjectItem item : objectList) item.imageResId = getResources().getIdentifier(item.imageResName, "drawable", getPackageName());
         ObjectAdapter adapter = new ObjectAdapter(this, objectList);
         recyclerView.setAdapter(adapter);
+        String[] categories = {"Все", "Развлечения", "Государство", "Онлайн-покупки", "Финансы", "Образование"};
+        Spinner categorySpinner = findViewById(R.id.categorySpinner);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(spinnerAdapter);
 
-        Button switchThemeButton = findViewById(R.id.switchThemeButton);
-        switchThemeButton.setOnClickListener(v -> {
-            isDarkMode = !isDarkMode;
-            sharedPref.edit().putBoolean("DARK_MODE", isDarkMode).apply();
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                      @Override
+                                                      public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                          String category = (String) parent.getItemAtPosition(position);
+                                                          adapter.filterByCategory(category);
+                                                      }
 
-            AppCompatDelegate.setDefaultNightMode(
-                    isDarkMode ? AppCompatDelegate.MODE_NIGHT_YES
-                            : AppCompatDelegate.MODE_NIGHT_NO
-            );
-        });
+                                                      @Override
+                                                      public void onNothingSelected(AdapterView<?> parent) {}
+                                                  });
+            Button switchThemeButton = findViewById(R.id.switchThemeButton);
+        switchThemeButton.setOnClickListener(v ->
+
+            {
+                isDarkMode = !isDarkMode;
+                sharedPref.edit().putBoolean("DARK_MODE", isDarkMode).apply();
+
+                AppCompatDelegate.setDefaultNightMode(
+                        isDarkMode ? AppCompatDelegate.MODE_NIGHT_YES
+                                : AppCompatDelegate.MODE_NIGHT_NO
+                );
+            });
     }
     private boolean isOnboardingCompleted() {
         SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
         return prefs.getBoolean("onboarding_completed", false);
-    }
+        }
     private List<ObjectItem> loadObjectsFromRaw() {
         List<ObjectItem> list = new ArrayList<>();
         try {
@@ -84,3 +104,4 @@ public class MainActivity extends AppCompatActivity {
         return list;
     }
 }
+
