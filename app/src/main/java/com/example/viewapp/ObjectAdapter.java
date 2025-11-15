@@ -3,6 +3,7 @@ package com.example.viewapp;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,6 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder
             nameTextView = itemView.findViewById(R.id.nameTextView);
             categoryView = itemView.findViewById(R.id.categoryView);
             downloadButton = itemView.findViewById(R.id.buttonDownload);
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
