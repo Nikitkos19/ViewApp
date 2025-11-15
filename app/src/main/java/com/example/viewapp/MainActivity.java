@@ -51,10 +51,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         objectList = loadObjectsFromRaw();
-        for (ObjectItem item : objectList) {
-            int resId = getResources().getIdentifier(item.imageResName, "drawable", getPackageName());
-            item.imageResId = resId;
-        }
+        for (ObjectItem item : objectList) item.imageResId = getResources().getIdentifier(item.imageResName, "drawable", getPackageName());
         ObjectAdapter adapter = new ObjectAdapter(this, objectList);
         recyclerView.setAdapter(adapter);
 

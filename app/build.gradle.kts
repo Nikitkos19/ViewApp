@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.core)
     implementation(libs.recyclerview)
     implementation(libs.firebase.inappmessaging)
+    implementation(libs.cardview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
