@@ -52,7 +52,10 @@ public class OnboardingActivity extends AppCompatActivity {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Просто переходим на MainActivity, не сохраняем флаг
+                getSharedPreferences("app_prefs", MODE_PRIVATE)
+                        .edit()
+                        .putBoolean("onboarding_completed", true)
+                        .apply();
                 startActivity(new Intent(OnboardingActivity.this, MainActivity.class));
                 finish();
             }

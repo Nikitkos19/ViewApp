@@ -1,37 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- res/layout/item_object.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_weight="1"
+    android:layout_marginTop="12dp"
     android:orientation="vertical"
     android:paddingStart="8dp">
-    android:paddingStart="8dp"
-    android:gravity="center_vertical">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:layout_marginHorizontal="12dp"/>
 
 <TextView
 android:id="@+id/nameTextView"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:textSize="16sp"
-android:textStyle="bold" />
+android:textStyle="bold"
+    android:layout_toEndOf="@id/imageView"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginTop="16dp"
+    android:layout_alignTop="@id/imageView"/>
 
 <TextView
 android:id="@+id/shortTextView"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
-android:textSize="14sp" />
+android:textSize="14sp"
+    android:layout_toEndOf="@id/imageView"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginTop="16dp"
+    android:layout_alignTop="@id/imageView"/>
 
-<Button
-android:id="@+id/buttonDownload"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="Скачать" />
+    <Button
+        android:id="@+id/buttonDownload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Скачать"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="12dp"/>
 
-    </LinearLayout>
+</RelativeLayout>

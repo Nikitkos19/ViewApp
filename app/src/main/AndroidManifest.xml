@@ -9,9 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ViewApp">
 
-        <!-- Онбординг будет запускаться каждый раз -->
+        <!-- Основная активность, запускается при старте -->
         <activity
-            android:name=".OnboardingActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,9 +19,10 @@
             </intent-filter>
         </activity>
 
+        <!-- Онбординг, вызывается по необходимости -->
         <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+            android:name=".OnboardingActivity"
+            android:exported="true" />
 
     </application>
 
