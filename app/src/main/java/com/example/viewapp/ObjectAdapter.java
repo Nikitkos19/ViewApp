@@ -2,9 +2,12 @@ package com.example.viewapp;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,13 +53,27 @@ public class ObjectAdapter extends RecyclerView.Adapter<ObjectAdapter.ViewHolder
         private void showExtendedDialog(ObjectItem item) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_extended, null);
+
             ImageView imageView = dialogView.findViewById(R.id.dialogImageView);
             TextView extendedTextView = dialogView.findViewById(R.id.extendedTextView);
+
             imageView.setImageResource(item.imageResId);
             extendedTextView.setText(item.extendedText);
+
             builder.setView(dialogView);
             builder.setPositiveButton("Close", null);
-            builder.show();
+
+            final AlertDialog dialog = builder.create();
+            dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialogInterface) {
+                    if (dialog.getWindow() != null) {
+                        dialog.getWindow().setWindowAnimations(R.style.DialogFadeAnimation);
+                    }
+                }
+            });
+
+            dialog.show();
         }
     }
 
