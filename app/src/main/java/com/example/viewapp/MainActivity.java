@@ -1,5 +1,6 @@
 package com.example.viewapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
@@ -21,10 +22,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Проверяем, проходил ли пользователь онбординг
+        if (!isOnboardingCompleted()) {
+            startActivity(new Intent(this, OnboardingActivity.class));
+            finish();
+            return;
+        }
+
+        // Настройки темы
         sharedPref = getSharedPreferences("AppSettings", MODE_PRIVATE);
         isDarkMode = sharedPref.getBoolean("DARK_MODE", false);
 
-        // Применяем тему перед super.onCreate()
         if (isDarkMode) {
             setTheme(R.style.Base_Theme_ViewApp); // тёмная тема
         } else {
@@ -36,15 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Настраиваем RecyclerView
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true); // помогает с производительностью
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         objectList = new ArrayList<>();
 
-        
         objectList.add(new ObjectItem(R.drawable.image1, "ВК Музыка", "ВК Музыка", "Кайфуйте"));
         objectList.add(new ObjectItem(R.drawable.image2, "ВК Видео", "ВК Видео", "Сдохните"));
-        // Add more objects as needed
 
         ObjectAdapter adapter = new ObjectAdapter(this, objectList);
         recyclerView.setAdapter(adapter);
@@ -55,11 +62,15 @@ public class MainActivity extends AppCompatActivity {
             isDarkMode = !isDarkMode;
             sharedPref.edit().putBoolean("DARK_MODE", isDarkMode).apply();
 
-            // Применяем тему через AppCompatDelegate без recreate()
             AppCompatDelegate.setDefaultNightMode(
                     isDarkMode ? AppCompatDelegate.MODE_NIGHT_YES
                             : AppCompatDelegate.MODE_NIGHT_NO
             );
         });
+    }
+
+    private boolean isOnboardingCompleted() {
+        SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+        return prefs.getBoolean("onboarding_completed", false);
     }
 }
