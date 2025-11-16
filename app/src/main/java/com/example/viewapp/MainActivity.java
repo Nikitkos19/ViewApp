@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         for (ObjectItem item : objectList) item.imageResId = getResources().getIdentifier(item.imageResName, "drawable", getPackageName());
         ObjectAdapter adapter = new ObjectAdapter(this, objectList);
         recyclerView.setAdapter(adapter);
-        String[] categories = {"Все", "Развлечения", "Государство", "Онлайн-покупки", "Финансы", "Образование"};
+        String[] categories = {"Все", "Развлечения", "Государственные", "Онлайн-покупки", "Финансы", "Образование"};
         Spinner categorySpinner = findViewById(R.id.categorySpinner);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
